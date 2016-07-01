@@ -23,7 +23,7 @@ public class GrabListener implements ServletContextListener  {
 //            }
 //        }).thread(1);
 //        spider.start();
-		Spider spider2 = Spider.create(new PageProcessorChinaMoney("http://www.chinamoney.com.cn")).addUrl("http://www.chinamoney.com.cn").addPipeline(new Pipeline() {
+		Spider spider2 = Spider.create(new PageProcessorChinaMoney("http://www.chinamoney.com.cn/index.html")).addUrl("http://www.chinamoney.com.cn/index.html").addPipeline(new Pipeline() {
             public void process(ResultItems resultItems, Task task) {
                 System.out.println(resultItems.get("title"));
             }

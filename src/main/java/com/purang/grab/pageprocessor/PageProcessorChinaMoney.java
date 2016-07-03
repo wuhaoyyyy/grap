@@ -16,7 +16,7 @@ public class PageProcessorChinaMoney implements PageProcessor{
     
 	public PageProcessorChinaMoney(String startUrl) {
 		this.startUrl=startUrl;
-        this.site = Site.me().setSleepTime(1000);
+        this.site = Site.me().setSleepTime(1000).setCharset("UTF-8").setUseGzip(false).addHeader("Accept-Encoding", "deflate").setTimeOut(5000);
 	}
 
 	@Override
@@ -25,7 +25,7 @@ public class PageProcessorChinaMoney implements PageProcessor{
 		List<String> requests =Lists.newArrayList();
 		requests.add(startUrl);
         page.addTargetRequests(requests);
-		//债券发行与上市
+        //
         page.putField("title", page.getHtml().xpath("//*[@id=\"nav\"]/ul/li[2]/ul/li[4]/ul/li[1]/a"));
         page.putField("html", page.getHtml().toString());
         page.putField("content", page.getHtml().smartContent());

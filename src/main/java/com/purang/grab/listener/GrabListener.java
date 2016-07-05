@@ -29,6 +29,8 @@ public class GrabListener implements ServletContextListener  {
             }
         }).thread(1);
         spider2.start();
+        spider2.run();
+        spider2.close();
 
 	}
 	public void contextDestroyed(ServletContextEvent arg0) {

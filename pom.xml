@@ -7,6 +7,10 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>grab Maven Webapp</name>
   <url>http://maven.apache.org</url>
+  <properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<spring.version>3.2.4.RELEASE</spring.version>
+	</properties>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -14,13 +18,16 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
-    
-    
     <dependency>
       <groupId>us.codecraft</groupId>
       <artifactId>webmagic-core</artifactId>
       <version>0.5.4-SNAPSHOT</version>
     </dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-beans</artifactId>
+		<version>${spring.version}</version>
+	</dependency>
   </dependencies>
   <build>
     <finalName>grab</finalName>

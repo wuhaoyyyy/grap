@@ -1,3 +1,6 @@
 eclipse.preferences.version=1
 encoding//src/main/java/com/purang/grab/pageprocessor/PageProcessorChinaMoney.java=UTF-8
+encoding//src/main/java/com/purang/grab/pageprocessor/PageProcessorPreProcessDefault.java=UTF-8
+encoding//src/main/java/com/purang/grab/pageprocessor/PageProcessorPreProcessJsFunction.java=UTF-8
+encoding//src/main/java/com/purang/grab/pageprocessor/PreProcess.java=UTF-8
 encoding/<project>=UTF-8

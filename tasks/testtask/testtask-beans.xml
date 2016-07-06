@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+	<!--  -->
+	<bean id="dataprocess" scope="singleton" class="com.purang.grab.pageprocessor.DataProcess">
+		<property name="url" value="http://www.chinamoney.com.cn/fe/jsp/CN/chinamoney/notice/beDraftByTremList.jsp?searchTypeCode=100041"></property> 
+		<property name="ruleList">
+        	<list>
+        		<ref bean="rule1" />
+        		<ref bean="rule2" />
+        	</list>
+		</property>
+	</bean>
+	
+	<bean id="rule1" class="com.purang.grab.rule.GrabRule">
+		<property name="name" value="标题"></property> 
+		<property name="value" value="/html/body/table/tbody/tr/td/a/text()"></property> 
+		<property name="type" value="xpath"></property> 
+	</bean>
+	<bean id="rule2" class="com.purang.grab.rule.GrabRule">
+		<property name="name" value="url"></property> 
+		<property name="value" value="/html/body/table/tbody/tr/td/a"></property> 
+		<property name="type" value="xpath"></property> 
+	</bean>
+	<bean id="rule3" class="com.purang.grab.rule.GrabRule"></bean>
+	
+	
+</beans>

@@ -50,12 +50,8 @@ public class GrabServlet extends HttpServlet {
 		            }
 		        }).thread(1);
 		        spider.start();
+				spider.getStatus();
 			}
-			
-			
-			
-			
-			
 		}
 		else if(operation.equals("close")){
 	        //spider2.close();

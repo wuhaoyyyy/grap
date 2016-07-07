@@ -16,7 +16,7 @@ public class PageProcessorChinaMoney implements PageProcessor{
     
 	public PageProcessorChinaMoney(String startUrl) {
 		this.startUrl=startUrl;
-        this.site = Site.me().setSleepTime(1000).setCharset("UTF-8").setUseGzip(false).addHeader("Accept-Encoding", "deflate").setTimeOut(5000);
+        this.site = Site.me().setSleepTime(10000).setCharset("UTF-8").setUseGzip(false).addHeader("Accept-Encoding", "deflate").setTimeOut(5000);
 	}
 
 	@Override

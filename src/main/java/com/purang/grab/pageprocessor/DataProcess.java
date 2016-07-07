@@ -16,7 +16,7 @@ public class DataProcess implements PageProcessor {
     private Site site;
 	
     public DataProcess() {
-        this.site = Site.me().setSleepTime(1000).setCharset("UTF-8").setUseGzip(false).addHeader("Accept-Encoding", "deflate").setTimeOut(5000);
+        this.site = Site.me().setSleepTime(10000).setCharset("UTF-8").setUseGzip(false).addHeader("Accept-Encoding", "deflate").setTimeOut(50000);
 	}
     
 	@Override
@@ -26,6 +26,10 @@ public class DataProcess implements PageProcessor {
 	
 	@Override
 	public void process(Page page) {
+		//page.addTargetRequest(requestString);
+		if(page.getHtml().css("[title=\"下一页\"]")!=null){
+			page.addTargetRequests(page.getHtml().css("[title=\"下一页\"]").links().all());
+		}
 		for(GrabRule grabRule:ruleList){
 			page.putField(grabRule.getName() , page.getHtml().xpath(grabRule.getValue()).all());
 		}

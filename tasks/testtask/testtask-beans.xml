@@ -25,5 +25,6 @@
 	</bean>
 	<bean id="rule3" class="com.purang.grab.rule.GrabRule"></bean>
 	
-	
+	<!-- 下一页获取 -->
+	<!-- 结束条件 -->
 </beans>

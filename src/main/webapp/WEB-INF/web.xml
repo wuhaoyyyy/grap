@@ -4,16 +4,13 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
-  
-  
   <listener>
   	<listener-class>com.purang.grab.listener.GrabListener</listener-class>
   </listener>
   
-  
   <servlet>
   	<servlet-name>grab</servlet-name>
     <servlet-class>com.purang.grab.servlet</servlet-class>
-  
   </servlet>
+  
 </web-app>

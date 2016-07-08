@@ -4,14 +4,35 @@
 	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 	<!--  -->
 	<bean id="dataprocess" scope="singleton" class="com.purang.grab.pageprocessor.DataProcess">
-		<property name="url" value="http://www.chinamoney.com.cn/fe/jsp/CN/chinamoney/notice/beDraftByTremList.jsp?searchTypeCode=100041"></property> 
+		<property name="url" value="http://www.chinamoney.com.cn/fe/jsp/CN/chinamoney/notice/beDraftByTremList.jsp?searchTypeCode=100041"></property>
 		<property name="ruleList">
         	<list>
         		<ref bean="rule1" />
         		<ref bean="rule2" />
         	</list>
 		</property>
+		<property name="exitList">
+        	<list>
+        		<ref bean="rulepage" />
+        	</list>
+		</property>
 	</bean>
+	
+	
+	
+	<!-- 公告类型：原始披露一级：债券发行。 -->
+	<bean id="rulepage" class="com.purang.grab.rule.GrabRule">
+		<property name="name" value="下一页"></property> 
+		<property name="value" value="[title=&quot;下一页&quot;]"></property> 
+		<property name="type" value="css"></property> 
+	</bean>
+	<bean id="ruleend" class="com.purang.grab.rule.GrabRule">
+		<property name="name" value="下一页"></property> 
+		<property name="value" value="[title=&quot;下一页&quot;]"></property> 
+		<property name="type" value="css"></property> 
+	</bean>
+	
+	
 	
 	<bean id="rule1" class="com.purang.grab.rule.GrabRule">
 		<property name="name" value="标题"></property> 
@@ -19,11 +40,18 @@
 		<property name="type" value="xpath"></property> 
 	</bean>
 	<bean id="rule2" class="com.purang.grab.rule.GrabRule">
+		<property name="name" value="日期"></property> 
+		<property name="value" value="/html/body/table/tbody/tr/td[2]/text()"></property> 
+		<property name="type" value="xpath"></property> 
+	</bean>
+	
+	<bean id="rule3" class="com.purang.grab.rule.GrabRule">
 		<property name="name" value="url"></property> 
 		<property name="value" value="/html/body/table/tbody/tr/td/a"></property> 
 		<property name="type" value="xpath"></property> 
 	</bean>
-	<bean id="rule3" class="com.purang.grab.rule.GrabRule"></bean>
+	
+	
 	
 	<!-- 下一页获取 -->
 	<!-- 结束条件 -->

@@ -5,6 +5,9 @@ public class GrabRule {
 	private String name;
 	private String value;
 	private String type;
+	
+	//得到该rule的结果，然后判断是否退出
+	
 	public String getName() {
 		return name;
 	}

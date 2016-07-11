@@ -5,6 +5,16 @@
 	<!--  -->
 	<bean id="dataprocess" scope="singleton" class="com.purang.grab.pageprocessor.DataProcess">
 		<property name="url" value="http://www.chinamoney.com.cn/fe/jsp/CN/chinamoney/notice/beDraftByTremList.jsp?searchTypeCode=100041"></property>
+		<property name="defaultValue">
+			<map>
+				<entry key="AnnounceSource" value="2"/><!--公告来源   中国货币网     -->
+				<entry key="AnnounceType1" value="201"/> <!--公告类型：原始披露一级	债券类	201	债券发行 -->
+				<entry key="BondType1" value="201"/> <!-- 债券类型:原始披露一级	债券类	201	同业存单 -->
+			</map>
+		</property>
+		
+		
+		
 		<property name="ruleList">
         	<list>
         		<ref bean="rule1" />
@@ -14,6 +24,11 @@
 		<property name="exitList">
         	<list>
         		<ref bean="rulepage" />
+        	</list>
+		</property>
+		<property name="urlList">
+        	<list>
+        		<ref bean="rule3" />
         	</list>
 		</property>
 	</bean>
@@ -26,6 +41,7 @@
 		<property name="value" value="[title=&quot;下一页&quot;]"></property> 
 		<property name="type" value="css"></property> 
 	</bean>
+	
 	<bean id="ruleend" class="com.purang.grab.rule.GrabRule">
 		<property name="name" value="下一页"></property> 
 		<property name="value" value="[title=&quot;下一页&quot;]"></property> 
@@ -36,6 +52,7 @@
 	
 	<bean id="rule1" class="com.purang.grab.rule.GrabRule">
 		<property name="name" value="标题"></property> 
+		<property name="field" value="标题"></property> 
 		<property name="value" value="/html/body/table/tbody/tr/td/a/text()"></property> 
 		<property name="type" value="xpath"></property> 
 	</bean>
@@ -55,4 +72,5 @@
 	
 	<!-- 下一页获取 -->
 	<!-- 结束条件 -->
+	<!-- 继续抓取条件 -->
 </beans>

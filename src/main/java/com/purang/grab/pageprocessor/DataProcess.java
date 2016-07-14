@@ -19,6 +19,7 @@ import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.downloader.FileCache;
 import us.codecraft.webmagic.pipeline.FilePipeline;
+import us.codecraft.webmagic.pipeline.Pipeline;
 import us.codecraft.webmagic.processor.PageProcessor;
 import us.codecraft.webmagic.selector.Html;
 import us.codecraft.webmagic.selector.Selectable;
@@ -34,6 +35,8 @@ public class DataProcess implements PageProcessor {
 	private List<GrabRule> urlList=new ArrayList<GrabRule>();
     private Site site;
 	
+    private List<Pipeline> pipelineList=new ArrayList<Pipeline>();
+    
     public DataProcess() {
         this.site = Site.me().setSleepTime(10000).setCharset("UTF-8").setUseGzip(false).addHeader("Accept-Encoding", "deflate").setTimeOut(50000);
 	}

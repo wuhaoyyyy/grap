@@ -13,8 +13,6 @@
 			</map>
 		</property>
 		
-		
-		
 		<property name="ruleList">
         	<list>
         		<ref bean="rule1" />

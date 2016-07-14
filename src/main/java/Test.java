@@ -55,7 +55,7 @@ public class Test {
 		
 		BeanFactory taskBeanFactory = new XmlBeanFactory(rs);
 		final DataProcess dataProcess=(DataProcess)taskBeanFactory.getBean("dataprocess");
-		Spider.create(dataProcess).addRequest(requests)
+		Spider.create(dataProcess)
 		
 		
 		Spider spider = Spider.create(dataProcess).addUrl(dataProcess.getUrl()).addPipeline(new Pipeline() {

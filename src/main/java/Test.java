@@ -55,8 +55,6 @@ public class Test {
 		
 		BeanFactory taskBeanFactory = new XmlBeanFactory(rs);
 		final DataProcess dataProcess=(DataProcess)taskBeanFactory.getBean("dataprocess");
-		Spider.create(dataProcess)
-		
 		
 		Spider spider = Spider.create(dataProcess).addUrl(dataProcess.getUrl()).addPipeline(new Pipeline() {
 	        public void process(ResultItems resultItems, Task task) {
@@ -80,6 +78,8 @@ public class Test {
 		        	BondAnnouncementService service = (BondAnnouncementService) ac.getBean("bondAnnouncementService");
 		        	service.insertList(bondAnnouncementList);
 	        	}
+	        	
+	        	
 	        }
 	        	
 		}).thread(1);

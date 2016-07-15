@@ -1,13 +1,11 @@
 package com.purang.grab.pageprocessor;
 
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -15,75 +13,34 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-import com.purang.grab.rule.FieldRule;
-import com.purang.grab.rule.GrabRule;
-import com.purang.grab.rule.PagerRule;
-
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Request;
 import us.codecraft.webmagic.Site;
+import us.codecraft.webmagic.Spider;
+import us.codecraft.webmagic.downloader.FileCache;
+import us.codecraft.webmagic.pipeline.FilePipeline;
+import us.codecraft.webmagic.pipeline.Pipeline;
 import us.codecraft.webmagic.processor.PageProcessor;
 import us.codecraft.webmagic.selector.Html;
 import us.codecraft.webmagic.selector.Selectable;
-import us.codecraft.webmagic.utils.UrlUtils;
-public class DataProcess implements PageProcessor {
 
-    private Site site;
-    private Map<String,String> defaultValue=new HashMap<String, String>();
+import com.purang.grab.rule.GrabRule;
 
-	private List<FieldRule> fieldRuleList=new ArrayList<FieldRule>();
-	private PagerRule pageRule=new PagerRule();
+public class DataProcessTest implements PageProcessor {
+	
+	private String url;
+	private String sql;
+	private List<GrabRule> ruleResult=new ArrayList<GrabRule>();
+	private List<GrabRule> ruleExit=new ArrayList<GrabRule>();//
 	private List<GrabRule> urlList=new ArrayList<GrabRule>();
+    private Site site;
 	
-    public DataProcess() {
-
-    }
-
+    private List<Pipeline> pipelineList=new ArrayList<Pipeline>();
     
-	public Map<String, String> getDefaultValue() {
-		return defaultValue;
+    public DataProcessTest() {
+        this.site = Site.me().setSleepTime(10000).setCharset("UTF-8").setUseGzip(false).addHeader("Accept-Encoding", "deflate").setTimeOut(50000);
 	}
-
-
-	public void setDefaultValue(Map<String, String> defaultValue) {
-		this.defaultValue = defaultValue;
-	}
-
-
-	public List<FieldRule> getFieldRuleList() {
-		return fieldRuleList;
-	}
-
-
-	public void setFieldRuleList(List<FieldRule> fieldRuleList) {
-		this.fieldRuleList = fieldRuleList;
-	}
-
-
-	public PagerRule getPageRule() {
-		return pageRule;
-	}
-
-
-	public void setPageRule(PagerRule pageRule) {
-		this.pageRule = pageRule;
-	}
-
-	
-
-	public List<GrabRule> getUrlList() {
-		return urlList;
-	}
-
-
-	public void setUrlList(List<GrabRule> urlList) {
-		this.urlList = urlList;
-	}
-
-
-	public void setSite(Site site) {
-		this.site=site;
-	}
+    
 	@Override
 	public Site getSite() {
 		return this.site;
@@ -91,22 +48,18 @@ public class DataProcess implements PageProcessor {
 	
 	@Override
 	public void process(Page page) {
-		
-		Object level=page.getRequest().getExtra("level");
-
-		if(level==null){
-			List<String> nextPage=pageRule.getNextPageList(page.getHtml());
-			if(nextPage.equals("")) return;
-			else page.addTargetRequests(nextPage);
-			
-			for(FieldRule fieldRule:fieldRuleList){
-				page.putField(fieldRule.getTitle() , page.getHtml().xpath(fieldRule.getName()).all());
-			}
-			
-			
+		//page.addTargetRequest(requestString);
+//		if(page.getHtml().css("[title=\"下一页\"]")!=null){
+//			page.addTargetRequests(page.getHtml().css("[title=\"下一页\"]").links().all());
+//		}
+		page.getRequest().getExtras();
+		for(GrabRule grabRule:ruleResult){
+			page.putField(grabRule.getName() , page.getHtml().xpath(grabRule.getValue()).all());
 		}
 		
-
+		
+		
+		
 		for(GrabRule grabRule:urlList){
 			Html html=new Html(page.getRawText());
 			List<String> jsUrlList=new ArrayList<String>();
@@ -120,10 +73,10 @@ public class DataProcess implements PageProcessor {
 					//jsUrl=this.site.getDomain()+jsUrl;
 					jsUrlList.add(jsUrl);
 					//进入页面下载文件
-//                    page.addTargetRequest(jsUrl);
-					Request request=new Request(UrlUtils.canonicalizeUrl(jsUrl, "http://www.chinamoney.com.cn/fe/jsp/CN/chinamoney/notice/beDraftByTremList.jsp?searchTypeCode=100041"));
-					request.putExtra("level", "2");
-					page.addTargetRequest(request);
+					page.addTargetRequest(jsUrl);
+					Request request=new Request(jsUrl);
+					request.putExtra("", "");
+					//request.setExtras(extras);
 					
 				}
 				else if(jsFunction.indexOf("viewBond")>0){
@@ -137,10 +90,8 @@ public class DataProcess implements PageProcessor {
 					//URLEncoder.encode(value, "utf-8");
 					String jsUrl=new StringBuffer("/fe/Channel/12438?bondCode=").append(code).append("&bondName=").append(bondName).toString();
 					//jsUrl=this.site.getDomain()+jsUrl;
-					//page.addTargetRequest(jsUrl);
-					Request request=new Request(UrlUtils.canonicalizeUrl(jsUrl, "http://www.chinamoney.com.cn/fe/jsp/CN/chinamoney/notice/beDraftByTremList.jsp?searchTypeCode=100041"));
-					request.putExtra("level", "2");
-					page.addTargetRequest(request);
+					jsUrlList.add(jsUrl);
+					page.addTargetRequest(jsUrl);
 				}
 			}
 			
@@ -181,7 +132,34 @@ public class DataProcess implements PageProcessor {
 			
 			
 		}
-		
-		
 	}
+
+	
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+
+	public String getSql() {
+		return sql;
+	}
+
+	public void setSql(String sql) {
+		this.sql = sql;
+	}
+
+	public List<GrabRule> getUrlList() {
+		return urlList;
+	}
+
+	public void setUrlList(List<GrabRule> urlList) {
+		this.urlList = urlList;
+	}
+	
+	
+
 }

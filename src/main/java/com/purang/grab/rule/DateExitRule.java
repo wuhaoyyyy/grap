@@ -1,6 +1,9 @@
 package com.purang.grab.rule;
 
 import java.util.Date;
+
+import us.codecraft.webmagic.selector.Html;
+
 import com.purang.grab.util.DateUtils;
 
 public class DateExitRule extends ExitRule {
@@ -14,13 +17,13 @@ public class DateExitRule extends ExitRule {
 	public void setDateFormat(String dateFormat) {
 		this.dateFormat = dateFormat;
 	}
-
+	
 	@Override
-	public Boolean getExit() {
+	public Boolean getExit(Html html) {
 		Boolean exitResult=true;
 		Date date=new Date();
 		String datestr=DateUtils.getString(date, dateFormat);
-		String datetext=this.getRuleResult();
+		String datetext=this.getRuleResult(html);
 		if(datetext!=null&&!datetext.equals("")){
 			if(datestr.equals(datetext)){
 				exitResult=false;
